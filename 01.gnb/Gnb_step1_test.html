@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>GNB</title>
+
+	<style type="text/css">
+		* { margin:0; padding:0; }
+		body { margin:20px; font:12px/1.5 Dotum,Verdana,sans-serif; color:#999; }
+		ul { list-style:none; }
+
+		.gnb { padding:0 0 0 1px; *zoom:1; }
+		.gnb:after { clear:both; content:""; display:block; }
+		.gnb > li { float:left; }
+		.gnb > li > a { position:relative; display:block; border:1px solid #f47c91; margin:0 0 0 -1px; padding:5px 10px; font-size:15px; color:#fff; background:#ffc0cb; text-decoration:none; }
+		.gnb > li > a:hover,
+		.gnb > li > a.on { background:#f47c91; z-index:1; }
+		.gnb .sub { overflow:hidden; display:none; }
+		.gnb .sub > li { }
+		.gnb .sub > li > a { display:block; padding:2px 10px; font-size:12px; color:#fff; background:#f47c91; text-decoration:none; }
+		.gnb .sub > li > a:hover,
+		.gnb .sub > li > a.on { background:#ffc0cb; }
+	</style>
+
+	<script type="text/javascript" src="jquery-1.9.0.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var Gnb1depth = $('.gnb > li > a'),
+				Gnb2depth = $('.gnb > li > ul.sub');
+
+
+			Gnb1depth.on('mouseenter',function(){
+				$(this).addClass('on');
+				$(this).siblings('.sub').css({height:'auto',overflow:'visible',display:'block',opacity:0});
+				var calculateHeight = Gnb1depth.next().height();
+				$(this).siblings('.sub').css({height:0,opacity:1});
+
+				$(this).siblings('.sub').css('display','block').stop().animate({
+					'height':calculateHeight
+					},{
+					easing:"linear",
+					duration:300
+				});
+			});
+
+			Gnb1depth.on('mouseleave',function(){
+				$(this).removeClass('on');
+
+				$(this).siblings('.sub').css({overflow:'hidden'}).stop().animate({
+					'height':'0'
+					},{
+					easing:"linear",
+					duration:300,
+					compleate:function(){$(this).css('display','none')}
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="gnb">
+		<ul class="gnb">
+			<li><a href="#none">Menu 1</a>
+				<ul class="sub">
+					<li><a href="#none">Sub 1</a></li>
+					<li><a href="#none">Sub 2</a></li>
+					<li><a href="#none">Sub 3</a></li>
+					<li><a href="#none">Sub 4</a></li>
+				</ul>
+			</li>
+			<li><a href="#none">Menu 2</a></li>
+			<li><a href="#none">Menu 3</a>
+				<ul class="sub">
+					<li><a href="#none">Sub 1</a></li>
+					<li><a href="#none">Sub 2</a></li>
+					<li><a href="#none">Sub 3</a></li>
+				</ul>
+			</li>
+			<li><a href="#none">Menu 4</a></li>
+			<li><a href="#none">Menu 5</a></li>
+		</ul>
+	</div>
+</body>
+</html>
